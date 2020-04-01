@@ -2,7 +2,7 @@
 """
 
 
-@author: Pieter Spaepen
+@author: Stijn
 """
 
 # -*- coding: utf-8 -*-
