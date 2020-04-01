@@ -33,7 +33,7 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from bridge_150cm import bridge_150cm
+        from TheBridge import bridge_150cm
         Tr = bridge_150cm()
         
 #additional function added to be able to print matrices
