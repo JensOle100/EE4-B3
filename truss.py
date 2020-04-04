@@ -110,18 +110,16 @@ class truss:
         return (max(nodesUsed))
     
     # create a method to return total surface area of all elements in the truss
-    #def getTotalSurfaceArea(self,Unit):
-        # get the total surface area of all the elements in the truss
-     #   surfaceOffset =       # determined using SW
-      #  surfaceGain =              # width of the segment
-       # totalSurfaceArea = 
-        #for Elem in :
-            #add the surface to the totalSurfaceArea 
-            
-     #   if Unit == '%':
-      #      return totalSurfaceArea/(600*300)*2*100
-       # else:
-        #    return totalSurfaceArea    
+    def getTotalSurfaceArea(self,Unit):
+    #get the total surface area of all the elements in the truss
+        totalSurfaceArea = 0
+        for Elem in self.elementList:
+    #add the surface to the totalSurfaceArea
+            totalSurfaceArea += (Elem.elementLength + 0.02)*0.02
+        if Unit == '%':
+            return totalSurfaceArea/(0.6*0.3)
+        else:
+            return totalSurfaceArea
         
               
     # create a method to print all information of an element
@@ -131,7 +129,7 @@ class truss:
         print(*self.elementList)
         #cycle to through the elements to plot the info
         if detailElement:
-            for el in elementList:
+            for el in self.elementList:
                 el.print_details(detailNode)
                 #print the element information, pass the detail for printing the node info
                 

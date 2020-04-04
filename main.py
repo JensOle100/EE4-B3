@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from node import *
 from element import *
+from truss import *
 
 # close all open figures
 plt.close('all')
@@ -187,7 +188,10 @@ for El in Tr.elementList:
 
 
 #generate an empty figure to be used for plotting. 
-h1=plt.figure(figsize = (30, 30))    
+h1=plt.figure(figsize = (20, 20), dpi=150)    
 Tr.plotTruss(h1,U)
+
+print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
+print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
 
 
