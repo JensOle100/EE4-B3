@@ -29,28 +29,40 @@ def bridge_150cm():
     NTble = nodeTable()
     # add elements to the node table usig addNode_to_table
     NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
+    
     NTble.addNode_to_table(node(1,0,0,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(2,150*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(3,300*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(4,450*10**-3,0,np.nan,np.nan,np.nan,-20))
-    NTble.addNode_to_table(node(5,600*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(6,750*10**-3,0,np.nan,np.nan,np.nan,0))
-    NTble.addNode_to_table(node(7,900*10**-3,0,np.nan,np.nan,np.nan,-20))
-    NTble.addNode_to_table(node(8,1050*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(9,1200*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(10,1350*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(11,1500*10**-3,0,np.nan,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(22,(150-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(23,(300-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(24,(450-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(25,(600-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(26,(750-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(27,(900-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(28,(1050-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(29,(1200-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(30,(1350-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(31,(1500-75)*10**-3,np.sqrt(150**2-75**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-
+    NTble.addNode_to_table(node(2,100*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(3,200*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(4,300*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(5,400*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(6,500*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(7,600*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(8,700*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(9,800*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(10,900*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(11,1000*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(12,1100*10**-3,0,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(13,1200*10**-3,0,np.nan,0,np.nan,np.nan))
+    
+    
+    
+    
+    #NTble.addNode_to_table(node(11,1000*10**-3,0,np.nan,0,np.nan,np.nan))
+    
+    
+    
+    NTble.addNode_to_table(node(22,(100-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(23,(200-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(24,(300-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(25,(400-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(26,(500-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(27,(600-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(28,(700-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(29,(800-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,100))
+    NTble.addNode_to_table(node(30,(900-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,100))
+    NTble.addNode_to_table(node(31,(1000-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(32,(1100-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(33,(1200-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
     
     
     """ setting up the list of elements """
@@ -68,6 +80,9 @@ def bridge_150cm():
     Tr.addElementByNode(NTble,8,9)
     Tr.addElementByNode(NTble,9,10)
     Tr.addElementByNode(NTble,10,11)
+    Tr.addElementByNode(NTble,11,12)
+    Tr.addElementByNode(NTble,12,13)
+    
     Tr.addElementByNode(NTble,22,23)
     Tr.addElementByNode(NTble,23,24)
     Tr.addElementByNode(NTble,24,25)
@@ -77,6 +92,9 @@ def bridge_150cm():
     Tr.addElementByNode(NTble,28,29)
     Tr.addElementByNode(NTble,29,30)
     Tr.addElementByNode(NTble,30,31)
+    Tr.addElementByNode(NTble,31,32)
+    Tr.addElementByNode(NTble,32,33)
+    
     Tr.addElementByNode(NTble,1,22)
     Tr.addElementByNode(NTble,22,2)
     Tr.addElementByNode(NTble,2,23)
@@ -97,5 +115,10 @@ def bridge_150cm():
     Tr.addElementByNode(NTble,30,10)
     Tr.addElementByNode(NTble,10,31)
     Tr.addElementByNode(NTble,31,11)
+    
+    Tr.addElementByNode(NTble,11,32)
+    Tr.addElementByNode(NTble,32,12)
+    Tr.addElementByNode(NTble,12,33)
+    Tr.addElementByNode(NTble,33,13)
     
     return Tr
