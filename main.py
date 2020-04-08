@@ -158,7 +158,6 @@ F_reduced = F[keep]
 
 ########################Jens: IK BEN HIER GESTOPT 25/03/2020 18:14
 
-
 # step 7: calculate U_reduced
 # tip: use numpy.linalg.solve
 U_reduced = np.linalg.solve(K_reduced, F_reduced)
@@ -174,11 +173,9 @@ for t in range(0,len(keep)):
 index_nans = np.isnan(U)
 U[index_nans] = 0
     
-
 # step 10: calculate the reaction forces
 # tip use the @ function for matrix multiplication
 F_reaction = np.matmul(K, U) - F
-
  
 # step 11: calculate the stress and buckling risk in all elements
 # cycle through the list of elements and calculate the values
@@ -186,12 +183,15 @@ for El in Tr.elementList:
     El.setStress(U)
     El.setBuckleRisk()
 
-
 #generate an empty figure to be used for plotting. 
 h1=plt.figure(figsize = (20, 20), dpi=150)    
 Tr.plotTruss(h1,U)
 
+#EXTRA print commands to asses truss construction faster
 print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
 print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
+Tr.print_MaxMinStress()
+
+
 
 
