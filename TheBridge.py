@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-
-
 @author: Pieter Spaepen
 """
 
 # -*- coding: utf-8 -*-
 """
 defining a bridge 
-
 @author: Pieter Spaepen
 """
 from node import node
@@ -54,13 +51,13 @@ def bridge_150cm():
     NTble.addNode_to_table(node(30,(1350-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
     NTble.addNode_to_table(node(31,(1500-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
 
-    NTble.addNode_to_table(node(40,0,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(41,150,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(42,300,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(43,450,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(44,600,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(45,750,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(46,900,150*10**-3,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(40,0,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(41,150,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(42,300,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(43,450,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(44,600,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(45,750,300*10**-3,np.nan,np.nan,np.nan))
+    NTble.addNode_to_table(node(46,900,300*10**-3,np.nan,np.nan,np.nan))
     
     """ setting up the list of elements """
     
