@@ -33,8 +33,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TrussConstructions_Ciaran import TrussConstruction_Ciaran_v1
-        Tr = TrussConstruction_Ciaran_v1()
+        from TrussConstructions_Ciaran import TrussConstruction_Ciaran_v3
+        Tr = TrussConstruction_Ciaran_v3()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
