@@ -114,12 +114,22 @@ class truss:
     #get the total surface area of all the elements in the truss
         totalSurfaceArea = 0
         for Elem in self.elementList:
-    #add the surface to the totalSurfaceArea
-            totalSurfaceArea += (Elem.elementLength + 0.02)*0.02
+    #add the surface to the totalSurfaceArea (*2 want de brug heeft twee symmetrische vlakken)
+            totalSurfaceArea += (Elem.elementLength + 0.02)*0.02*2
         if Unit == '%':
-            return totalSurfaceArea/(0.6*0.3)
+            return totalSurfaceArea/(0.6*0.3) *100
         else:
             return totalSurfaceArea
+        
+    #EXTRA function to print the highest and lowest force.
+    def print_MaxMinStress(self):
+        
+        stresses = []
+        for Elem in self.elementList:
+            stresses.append(Elem.elementStress)
+            
+        print('Highest  stress:', max(stresses), 'Mpa')
+        print('Lowest   stress:', min(stresses), 'Mpa')
         
               
     # create a method to print all information of an element
@@ -132,6 +142,7 @@ class truss:
             for el in self.elementList:
                 el.print_details(detailNode)
                 #print the element information, pass the detail for printing the node info
+                
                 
     # a method to print the result
     def plotTruss(self,h1,U):
@@ -159,7 +170,7 @@ class truss:
             plt.plot(xd1,yd1,'r.')
             # Plot relevent node numbers above each truss.
             # Adapt font size and space before text to fit size of figure you want.
-            tt=plt.text(x1,y1,"      ElNr: {0:}, node:  {1:}-{2:}".format(self.elementList[t].elementNr,self.elementList[t].firstNode.nodeNr,self.elementList[t].secondNode.nodeNr),fontsize=9,rotation=(np.arctan2((y2-y1),(x2-x1)))/3.14*180,rotation_mode='anchor',color='grey')
+            tt=plt.text(x1,y1,"      ElNr: {0:}, node:  {1:}-{2:}".format(self.elementList[t].elementNr,self.elementList[t].firstNode.nodeNr,self.elementList[t].secondNode.nodeNr),fontsize=11,rotation=(np.arctan2((y2-y1),(x2-x1)))/3.14*180,rotation_mode='anchor',color='grey')
         plt.axis('equal')  
         plt.ylabel('metres')  
         plt.xlabel('metres') 
