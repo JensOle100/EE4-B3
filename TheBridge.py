@@ -24,34 +24,30 @@ def bridge_150cm():
     # initialize an empty node table
     NTble = nodeTable()
 
-
-
-
 # =====================INPUTS===============================
     #How many nodes on the bottom line of the truss?
-    nodesQuantity = 12
+    nodesQuantity = 5
 
     #How long should the distance between the nodes on the bottom line be?
-    Leng = 150*10**-3
+    Leng = 280*10**-3
     
     #Distance between top and bottom line
     Height =  np.sqrt(Leng**2-(Leng/2)**2)
     
     #The number of the node where the load attaches
-    ForceNodeNr = 11
+    ForceNodeNr = 101
     
     #Components of the force of the load    
     Fx = 0
-    Fy = -10
+    Fy = -60
     
     #Number of the nodes that cannot move. (attached to the mounting)
-    LockNodeNrs = [0, 1, 22]
+    LockNodeNrs = (0, 1)
     
     #angle of the truss.
-    angle = 0
+    angle = 30
     th = np.radians(angle)
 # ===========================================================
-
 
 
     ''' setting up the list of nodes '''
@@ -94,8 +90,7 @@ def bridge_150cm():
             tempDispY = np.nan
 
         NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(th)-Height*np.sin(th),Height*np.cos(th)+(x*Leng-Leng/2)*np.sin(th),tempDispX,tempDispY,tempFx,tempFy))    
-   
-        
+
    
     """ setting up the list of elements """   
     #create an empty truss
@@ -111,5 +106,18 @@ def bridge_150cm():
     for y in range(22, 22 + nodesQuantity - 2):
         Tr.addElementByNode(NTble,y-21,y)
         Tr.addElementByNode(NTble,y-20,y)
-    
+        
+# === Manually add NODES below ===   
+    NTble.addNode_to_table(node(101,0.8,0.6,np.nan,np.nan,Fx,Fy))
+
+
+# === Manually add ELEMENTS below ===   
+    Tr.addElementByNode(NTble,101,4)
+    Tr.addElementByNode(NTble,101,24)
+
+    Tr.addElementByNode(NTble,22,23)
+    Tr.addElementByNode(NTble,1,2)
+    Tr.addElementByNode(NTble,2,3)
+# === == == == ==  == == == == ===
+        
     return Tr
