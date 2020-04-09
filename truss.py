@@ -138,6 +138,16 @@ class truss:
             bucklerisks.append(Elem.elementBuckleRisk)
             
         return max(bucklerisks)
+    
+    def print_ElementLength(self):
+        lengths = []
+        for Elem in self.elementList:
+            lengths.append(round(Elem.elementLength,3))
+           
+        lengthsReduced = list(set(lengths))
+        
+        for x in lengthsReduced:
+            print('Length', x, 'is used', lengths.count(x), 'times.')
          
               
     # create a method to print all information of an element
