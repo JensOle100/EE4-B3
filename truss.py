@@ -110,19 +110,35 @@ class truss:
         return (max(nodesUsed))
     
     # create a method to return total surface area of all elements in the truss
-    #def getTotalSurfaceArea(self,Unit):
-        # get the total surface area of all the elements in the truss
-     #   surfaceOffset =       # determined using SW
-      #  surfaceGain =              # width of the segment
-       # totalSurfaceArea = 
-        #for Elem in :
-            #add the surface to the totalSurfaceArea 
-            
-     #   if Unit == '%':
-      #      return totalSurfaceArea/(600*300)*2*100
-       # else:
-        #    return totalSurfaceArea    
+    def getTotalSurfaceArea(self,Unit):
+    #get the total surface area of all the elements in the truss
+        totalSurfaceArea = 0
+        for Elem in self.elementList:
+    #add the surface to the totalSurfaceArea (*2 want de brug heeft twee symmetrische vlakken)
+            totalSurfaceArea += (Elem.elementLength + 0.02)*0.02*2
+        if Unit == '%':
+            return totalSurfaceArea/(0.6*0.3) *100
+        else:
+            return totalSurfaceArea
         
+    #EXTRA function to print the highest and lowest force.
+    def print_MaxMinStress(self):
+        
+        stresses = []
+        for Elem in self.elementList:
+            stresses.append(Elem.elementStress)
+            
+        print('Highest  stress:', max(stresses)/10**6, 'Mpa')
+        print('Lowest   stress:', min(stresses)/10**6, 'Mpa')
+        
+    def get_HighestBuckleRisk(self):
+       
+        bucklerisks = []
+        for Elem in self.elementList:
+            bucklerisks.append(Elem.elementBuckleRisk)
+            
+        return max(bucklerisks)
+         
               
     # create a method to print all information of an element
     def print_details(self,detailElement,detailNode):
@@ -131,9 +147,10 @@ class truss:
         print(*self.elementList)
         #cycle to through the elements to plot the info
         if detailElement:
-            for el in elementList:
+            for el in self.elementList:
                 el.print_details(detailNode)
                 #print the element information, pass the detail for printing the node info
+                
                 
     # a method to print the result
     def plotTruss(self,h1,U):
@@ -161,7 +178,7 @@ class truss:
             plt.plot(xd1,yd1,'r.')
             # Plot relevent node numbers above each truss.
             # Adapt font size and space before text to fit size of figure you want.
-            tt=plt.text(x1,y1,"      ElNr: {0:}, node:  {1:}-{2:}".format(self.elementList[t].elementNr,self.elementList[t].firstNode.nodeNr,self.elementList[t].secondNode.nodeNr),fontsize=9,rotation=(np.arctan2((y2-y1),(x2-x1)))/3.14*180,rotation_mode='anchor',color='grey')
+            tt=plt.text(x1,y1,"      ElNr: {0:}, node:  {1:}-{2:}".format(self.elementList[t].elementNr,self.elementList[t].firstNode.nodeNr,self.elementList[t].secondNode.nodeNr),fontsize=11,rotation=(np.arctan2((y2-y1),(x2-x1)))/3.14*180,rotation_mode='anchor',color='grey')
         plt.axis('equal')  
         plt.ylabel('metres')  
         plt.xlabel('metres') 

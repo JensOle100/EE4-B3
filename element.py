@@ -29,7 +29,7 @@ Extra features could be added.
 import numpy as np
 
 # select the example to plot,  This should be altered in your code
-book_ex = True
+book_ex = False
 if book_ex:
     A = 8                                       #value from textbook example
     E = 1.9*10**6                               #value from textbook example
@@ -53,14 +53,10 @@ class element:
     list_of_elementNrs = []
 
     def __init__(self,elementNr,firstNode,secondNode):
-        
         # if elementNr is 0 and element.list_of_elemenNrs is not empty-> assign next free elementNr
         if elementNr == 0 and len(self.list_of_elementNrs) != 0:
 #            self.elementNr = elementNr + 1
             self.elementNr = max(self.list_of_elementNrs) + 1 
-         
-
-        
         else:
 
             self.elementNr = elementNr + 1
@@ -75,15 +71,12 @@ class element:
         self.elementInertia = I
         #calculate the angle of the element, use np.arctan2 to obtain a correct angle
         
-        
         self.elementAngle = np.arctan2(secondNode.yPos -firstNode.yPos , secondNode.xPos - firstNode.xPos)
         self.stressScale = Scale_Mpa
-        
         
         #set the stress and buckling risk to nan 
         self.elementStress = np.nan
         self.elementBuckleRisk = np.nan
-        
         
         # here your could things to do when you create a new element 
         # e.g. add the new elementNr to the list_of_elementNrs
@@ -105,24 +98,17 @@ class element:
             
         print("   elementAngle = {}".format(self.elementAngle/(np.pi)*180))
         
-        
     # create a method to change the Emodulus to some value
     def setEmodulus(self,value):
         #add code here to change the E modulus (don't forget to also set the new elementStiffness)
         self.elementEmodulus = value
         self.elementStiffness =  (self.elementArea*self.elementEmodulus) / self.elementLength
-        print("elementEmodulus = ")
-        print(self.value)
-        print("elementStifness = ")
-        print(self.elementStiffness)
-        
-   
+
     # create a method to change the Inertia to some value
     def setInertia(self,value):
         #add code here to change the E modulus
         self.elementInertia = value
-        print("elementInertia = ")
-        print(self.value)
+        
         
     # create a method to calculate the stress based on the global displacement matrix
     def setStress(self,U):
@@ -146,10 +132,6 @@ class element:
         # self.elementStress = 
         self.elementStress = (self.elementEmodulus)*((u[0] - u[2])/(self.elementLength))
 
-        print("elementStress = ")
-        print(self.elementStress)
-        
-     
      # create a method to calculate the buckling risk of the element   
     def setBuckleRisk(self):       
        k = 1  #coefficient of euler formula
@@ -165,9 +147,6 @@ class element:
            self.elementBuckleRisk = (Fcur)/(Fcrit)*100
        else:
           self.elementBuckleRisk = 0
-        
-       print("elementBuckleRisk = ") 
-       print(self.elementBuckleRisk)
 
     @classmethod
      # this section can be used to act on the variables created in the top section 

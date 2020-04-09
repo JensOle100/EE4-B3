@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from node import *
 from element import *
+from truss import *
 
 # close all open figures
 plt.close('all')
@@ -33,8 +34,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TheBridge import bridge_150cm
-        Tr = bridge_150cm()
+        from TheBridge import bridge_3
+        Tr = bridge_3()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
@@ -63,14 +64,12 @@ F = np.zeros((matrixDimension, 1))
 # cycle through the list of elements and set the boundary conditions of the node
 for El in Tr.elementList:
     node1 = El.firstNode
-    U[node1.nodeNr*2,0]=    node1.xDisp
-    U[node1.nodeNr*2 + 1,0]=   node1.yDisp
+    U[node1.nodeNr*2,0]=        node1.xDisp
+    U[node1.nodeNr*2 + 1,0]=    node1.yDisp
     
     node2 = El.secondNode
-    U[node2.nodeNr*2,0]=     node2.xDisp
-    U[node2.nodeNr*2 + 1,0]=   node2.yDisp
-
-
+    U[node2.nodeNr*2,0]=        node2.xDisp
+    U[node2.nodeNr*2 + 1,0]=    node2.yDisp
 
 
 # step 4: boundary conditions for the forces
@@ -81,17 +80,17 @@ for El in Tr.elementList:
     # if not Fx in node1 == nan use the value to be set in F
     # tip: use np.isnan
     if not np.isnan(node1.Fx):
-        F[node1.nodeNr*2,0] =   node1.Fx    
+        F[node1.nodeNr*2,0] = node1.Fx    
     # if not Fy in node1 == nan use the value to be set in F
     # tip: use np.isnan    
     if not np.isnan(node1.Fy) :
-        F[node1.nodeNr*2 + 1,0] =       node1.Fy
+        F[node1.nodeNr*2 + 1,0] = node1.Fy
     # get the second node2 and repeat the process
     node2 = El.secondNode
     if not np.isnan(node2.Fx) :
-        F[node2.nodeNr*2,0] =   node2.Fx   
+        F[node2.nodeNr*2,0] = node2.Fx   
     if not np.isnan(node2.Fy):
-        F[node2.nodeNr*2 + 1,0] =       node2.Fy
+        F[node2.nodeNr*2 + 1,0] = node2.Fy
      
 
 # step 5: global stiffness matrix
@@ -152,12 +151,6 @@ for t in range(0,len(K)):
 K_reduced = K[np.ix_(keep, keep)]
 F_reduced = F[keep]
 
-#####F_reduced is misschien fout? Geen idee waarom het dit is...
-
-
-########################Jens: IK BEN HIER GESTOPT 25/03/2020 18:14
-
-
 # step 7: calculate U_reduced
 # tip: use numpy.linalg.solve
 U_reduced = np.linalg.solve(K_reduced, F_reduced)
@@ -173,11 +166,9 @@ for t in range(0,len(keep)):
 index_nans = np.isnan(U)
 U[index_nans] = 0
     
-
 # step 10: calculate the reaction forces
 # tip use the @ function for matrix multiplication
 F_reaction = np.matmul(K, U) - F
-
  
 # step 11: calculate the stress and buckling risk in all elements
 # cycle through the list of elements and calculate the values
@@ -185,9 +176,16 @@ for El in Tr.elementList:
     El.setStress(U)
     El.setBuckleRisk()
 
-
 #generate an empty figure to be used for plotting. 
-h1=plt.figure(figsize = (30, 30))    
+h1=plt.figure(figsize = (20, 20), dpi=150)    
 Tr.plotTruss(h1,U)
+
+#EXTRA print commands to asses truss construction faster
+print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
+print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
+Tr.print_MaxMinStress()
+print('Highest buckle risk:', Tr.get_HighestBuckleRisk(), '%')
+
+print(node.list_of_nodeNr)
 
 
