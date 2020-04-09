@@ -128,9 +128,17 @@ class truss:
         for Elem in self.elementList:
             stresses.append(Elem.elementStress)
             
-        print('Highest  stress:', max(stresses), 'Mpa')
-        print('Lowest   stress:', min(stresses), 'Mpa')
+        print('Highest  stress:', max(stresses)/10**6, 'Mpa')
+        print('Lowest   stress:', min(stresses)/10**6, 'Mpa')
         
+    def get_HighestBuckleRisk(self):
+       
+        bucklerisks = []
+        for Elem in self.elementList:
+            bucklerisks.append(Elem.elementBuckleRisk)
+            
+        return max(bucklerisks)
+         
               
     # create a method to print all information of an element
     def print_details(self,detailElement,detailNode):

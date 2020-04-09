@@ -18,7 +18,7 @@ import numpy as np
 
 
 """ setting up the list of nodes """
-def bridge_150cm():
+def bridge_1():
     """ setting up the list of nodes """
     # input all nodes with their respective nr and x,y position
     # initialize an empty node table
@@ -26,27 +26,30 @@ def bridge_150cm():
 
 # =====================INPUTS===============================
     #How many nodes on the bottom line of the truss?
-    nodesQuantity = 5
+    nodesQuantity = 6
 
     #How long should the distance between the nodes on the bottom line be?
     Leng = 280*10**-3
     
     #Distance between top and bottom line
-    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+#    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+    Height = 280*10**-3
     
     #The number of the node where the load attaches
-    ForceNodeNr = 101
+    ForceNodeNr = 5
     
     #Components of the force of the load    
     Fx = 0
-    Fy = -60
-    
+    Fy = -5    
     #Number of the nodes that cannot move. (attached to the mounting)
     LockNodeNrs = (0, 1)
     
     #angle of the truss.
-    angle = 30
-    th = np.radians(angle)
+    angleTop = 30
+    radTop = np.radians(angleTop)
+    
+    angleBottom = 30
+    radBottom = np.radians(angleBottom)
 # ===========================================================
 
 
@@ -68,7 +71,7 @@ def bridge_150cm():
             tempDispX = np.nan
             tempDispY = np.nan
 
-        NTble.addNode_to_table(node(x,(x-1)*Leng*np.cos(th),(x-1)*Leng*np.sin(th),tempDispX,tempDispY,tempFx,tempFy))
+        NTble.addNode_to_table(node(x,(x-1)*Leng*np.cos(radBottom),(x-1)*Leng*np.sin(radBottom),tempDispX,tempDispY,tempFx,tempFy))
     
     
     # creating the top line of the triangled truss
@@ -89,7 +92,7 @@ def bridge_150cm():
             tempDispX = np.nan
             tempDispY = np.nan
 
-        NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(th)-Height*np.sin(th),Height*np.cos(th)+(x*Leng-Leng/2)*np.sin(th),tempDispX,tempDispY,tempFx,tempFy))    
+        NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(radTop)-Height*np.sin(radTop),Height*np.cos(radTop)+(x*Leng-Leng/2)*np.sin(radTop),tempDispX,tempDispY,tempFx,tempFy))    
 
    
     """ setting up the list of elements """   
@@ -108,16 +111,11 @@ def bridge_150cm():
         Tr.addElementByNode(NTble,y-20,y)
         
 # === Manually add NODES below ===   
-    NTble.addNode_to_table(node(101,0.8,0.6,np.nan,np.nan,Fx,Fy))
-
+    # NTble.addNode_to_table(node(101,0.8,0.5,np.nan,np.nan,Fx,Fy))
 
 # === Manually add ELEMENTS below ===   
-    Tr.addElementByNode(NTble,101,4)
-    Tr.addElementByNode(NTble,101,24)
-
-    Tr.addElementByNode(NTble,22,23)
-    Tr.addElementByNode(NTble,1,2)
-    Tr.addElementByNode(NTble,2,3)
+    # Tr.addElementByNode(NTble,101,10)
+    # Tr.addElementByNode(NTble,101,30)
 # === == == == ==  == == == == ===
         
     return Tr
