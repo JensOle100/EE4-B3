@@ -34,8 +34,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TheBridge import bridge_1
-        Tr = bridge_1()
+        from TheBridge import bridge_3
+        Tr = bridge_3()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
@@ -185,5 +185,7 @@ print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
 print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
 Tr.print_MaxMinStress()
 print('Highest buckle risk:', Tr.get_HighestBuckleRisk(), '%')
+
+print(node.list_of_nodeNr)
 
 
