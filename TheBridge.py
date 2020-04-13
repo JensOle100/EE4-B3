@@ -1,297 +1,395 @@
-# -*- coding: utf-8 -*-
-"""
-@author: Pieter Spaepen
-"""
 
 # -*- coding: utf-8 -*-
 """
 defining a bridge 
 @author: Pieter Spaepen
+
+
+Jens: Last edited on 2020-04-04
+
 """
+
+
 from node import node
 from node import nodeTable
 from truss import truss
 import numpy as np
 
 
-""" 
-first bridge attempt
-"""
 
 """ setting up the list of nodes """
-
-def bridge_150cm():
+def bridge_1():
     """ setting up the list of nodes """
     # input all nodes with their respective nr and x,y position
     # initialize an empty node table
     NTble = nodeTable()
-    # add elements to the node table usig addNode_to_table
-    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
-    
-    NTble.addNode_to_table(node(1,0,0,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(2,150*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(3,300*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(4,450*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(5,600*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(6,750*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(7,900*10**-3,0,np.nan,np.nan,np.nan,-20))
-    NTble.addNode_to_table(node(8,1050*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(9,1200*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(10,1350*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(11,1500*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    
-    #NTble.addNode_to_table(node(19,0,150*10**-3,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(20,(150-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(21,(300-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(22,(450-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(23,(600-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(24,(750-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(25,(900-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(26,(1050-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(27,(1200-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(28,(1350-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(29,(1500-75)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
 
-    NTble.addNode_to_table(node(40,0,300*10**-3,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(41,150,300*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(42,300,300*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(43,450,300*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(44,600,300*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(45,750,300*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(46,900,300*10**-3,np.nan,np.nan,np.nan,np.nan))
+# =====================INPUTS===============================
+    #How many nodes on the bottom line of the truss?
+    nodesQuantity = 8
+    turnTrussUpsideDown = False
+
+    #How long should the distance between the nodes on the bottom line be?
+    Leng = 150*10**-3
     
-    """ setting up the list of elements """
+    #Distance between top and bottom line
+    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+
     
+    #The number of the node where the load attaches
+    ForceNodeNr = 7
+    
+    #Components of the force of the load    
+    Fx = 0
+    Fy = -5    
+    #Number of the nodes that cannot move. (attached to the mounting)
+    LockNodeNrs = (0, 1)
+    
+    #angle of the truss.
+    angleTop = 30
+    radTop = np.radians(angleTop)
+    
+    angleBottom = 30
+    radBottom = np.radians(angleBottom)
+# ===========================================================
+
+    if turnTrussUpsideDown == True:
+        inv = -1
+    else:
+        inv = 1
+
+
+    ''' setting up the list of nodes '''
+   # creating the bottom line of the triangled truss
+    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
+    for x in range(1, nodesQuantity):
+        if x == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if x in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(x,(x-1)*Leng*np.cos(radBottom),(x-1)*Leng*np.sin(radBottom),tempDispX,tempDispY,tempFx,tempFy))
+    
+    
+    # creating the top line of the triangled truss
+    for x in range(1, nodesQuantity-1):
+        tempNr = 21+x
+        
+        if x == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if x in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(radTop)-inv*Height*np.sin(radTop),inv*Height*np.cos(radTop)+(x*Leng-Leng/2)*np.sin(radTop),tempDispX,tempDispY,tempFx,tempFy))    
+
+   
+    """ setting up the list of elements """   
     #create an empty truss
     Tr = truss(1)
     #add elements using addElementByNode
-    Tr.addElementByNode(NTble,1,2)
-    Tr.addElementByNode(NTble,2,3)
-    Tr.addElementByNode(NTble,3,4)
-    Tr.addElementByNode(NTble,4,5)
-    Tr.addElementByNode(NTble,5,6)
-    Tr.addElementByNode(NTble,6,7)
-    Tr.addElementByNode(NTble,7,8)
-    Tr.addElementByNode(NTble,8,9)
-    Tr.addElementByNode(NTble,9,10)
-    Tr.addElementByNode(NTble,10,11)
     
-    Tr.addElementByNode(NTble,20,21)
-    Tr.addElementByNode(NTble,21,22)
-    Tr.addElementByNode(NTble,22,23)
+    for x in range(1, nodesQuantity-1):
+        Tr.addElementByNode(NTble,x,x+1)
+        
+    for x in range(1, nodesQuantity-2):
+        Tr.addElementByNode(NTble,21+x,22+x)
+            
+    for y in range(22, 22 + nodesQuantity - 2):
+        Tr.addElementByNode(NTble,y-21,y)
+        Tr.addElementByNode(NTble,y-20,y)
+        
+# === Manually add NODES below ===   
+    NTble.addNode_to_table(node(101,0,0.3,0,0,np.nan,np.nan))
+    NTble.addNode_to_table(node(102,0.15*np.cos(np.radians(30)),0.15*np.sin(np.radians(30))+0.3,np.nan,np.nan,np.nan,np.nan))
+
+# === Manually add ELEMENTS below ===   
+    Tr.addElementByNode(NTble,101,23)
+    Tr.addElementByNode(NTble,102,23)
+    Tr.addElementByNode(NTble,102,24)
+    Tr.addElementByNode(NTble,102,101)
+# === == == == ==  == == == == ===
+        
+    return Tr
+
+def bridge_2():
+    """ setting up the list of nodes """
+    # input all nodes with their respective nr and x,y position
+    # initialize an empty node table
+    NTble = nodeTable()
+
+# =====================INPUTS===============================
+    #How many nodes on the bottom line of the truss?
+    nodesQuantity = 2+6
+    turnTrussUpsideDown = True
+
+    #How long should the distance between the nodes on the bottom line be?
+    Leng = 140*10**-3
+    
+    #Distance between top and bottom line
+    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+    
+    #The number of the node where the load attaches
+    ForceNodeNr = 7
+    
+    #Components of the force of the load    
+    Fx = 0
+    Fy = -11
+    #Number of the nodes that cannot move. (attached to the mounting)
+    LockNodeNrs = (0, 1, 101)
+    
+    #angle of the truss.
+    angleTop = 27
+    radTop = np.radians(angleTop)
+    
+    angleBottom = angleTop
+    radBottom = np.radians(angleBottom)
+    
+    # #same values but for the additional structure on top.
+    # Leng2 = 280*10**-3
+    # Height2 = np.sqrt(Leng2**2-(Leng2/2)**2)
+    # nodesQuantityTop = 2+2
+    # angleExtra = 30
+    # radExtra = np.radians(angleExtra)
+# ===========================================================
+
+    if turnTrussUpsideDown == True:
+        inv = -1
+    else:
+        inv = 1
+
+
+    ''' setting up the list of nodes '''
+   # creating the bottom line of the triangled truss
+    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
+    for x in range(1, nodesQuantity):
+        if x == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if x in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(x,(x-1)*Leng*np.cos(radBottom),(x-1)*Leng*np.sin(radBottom),tempDispX,tempDispY,tempFx,tempFy))
+    
+    
+    # creating the top line of the triangled truss
+    for x in range(1, nodesQuantity-1):
+        tempNr = 21+x
+        
+        if tempNr == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if tempNr in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(radTop)-inv*Height*np.sin(radTop),inv*Height*np.cos(radTop)+(x*Leng-Leng/2)*np.sin(radTop),tempDispX,tempDispY,tempFx,tempFy))
+    
+    # #creating the second top truss line. (now the actual top)    
+    # for x in range(1, nodesQuantityTop-1):
+    #     tempNr = x
+        
+    #     if tempNr == ForceNodeNr:
+    #         tempFx = Fx
+    #         tempFy = Fy
+    #     else:
+    #         tempFx = np.nan
+    #         tempFy = np.nan
+            
+    #     if tempNr in LockNodeNrs:
+    #         tempDispX = 0
+    #         tempDispY = 0
+    #     else:
+    #         tempDispX = np.nan
+    #         tempDispY = np.nan
+
+    #     NTble.addNode_to_table(node(tempNr+100,(x*Leng2-Leng2/2)*np.cos(radExtra)-Height2*np.sin(radExtra),Height2*np.cos(radExtra)+(x*Leng2-Leng2/2)*np.sin(radExtra),tempDispX,tempDispY,tempFx,tempFy))
+
+   
+    """ setting up the list of elements """   
+    #create an empty truss
+    Tr = truss(1)
+    #add elements using addElementByNode
+    
+    for x in range(1, nodesQuantity-1):
+        Tr.addElementByNode(NTble,x,x+1)
+        
+    for x in range(1, nodesQuantity-2):
+        Tr.addElementByNode(NTble,21+x,22+x)
+            
+    for y in range(22, 22 + nodesQuantity - 2):
+        Tr.addElementByNode(NTble,y-21,y)
+        Tr.addElementByNode(NTble,y-20,y)
+        
+# === Manually add NODES below ===   
+    NTble.addNode_to_table(node(101,0,0.3,0,0,np.nan,np.nan))
+
+#    NTble.addNode_to_table(node(101,0,0.3,0,0,np.nan,np.nan))
+
+# === Manually add ELEMENTS below === 
+    Tr.addElementByNode(NTble,101,4)
+    
+    Tr.addElementByNode(NTble,24,25)
+  
+    # Tr.addElementByNode(NTble,101,3)
+    # Tr.addElementByNode(NTble,102,3)
+    # Tr.addElementByNode(NTble,102,5)
+    # Tr.addElementByNode(NTble,101,102)
+
+
+# === == == == ==  == == == == ===
+        
+    return Tr
+
+def bridge_3():
+    """ setting up the list of nodes """
+    # input all nodes with their respective nr and x,y position
+    # initialize an empty node table
+    NTble = nodeTable()
+
+# =====================INPUTS===============================
+    #How many nodes on the bottom line of the truss?
+    nodesQuantity = 2+6
+    turnTrussUpsideDown = True
+
+    #How long should the distance between the nodes on the bottom line be?
+    Leng = 150*10**-3
+    
+    #Distance between top and bottom line
+    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+    
+    #The number of the node where the load attaches
+    ForceNodeNr =201   
+    #Components of the force of the load    
+    Fx = 0
+    Fy = -10
+   
+    #Number of the nodes that cannot move. (attached to the mounting)
+    LockNodeNrs = (0, 1, 101)
+    
+    #angle of the truss.
+    angleTop = 30
+    radTop = np.radians(angleTop)
+    angleBottom = angleTop
+    radBottom = np.radians(angleBottom)
+# ===========================================================
+
+    if turnTrussUpsideDown == True:
+        inv = -1
+    else:
+        inv = 1
+
+
+    ''' setting up the list of nodes '''
+   # creating the bottom line of the triangled truss
+    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
+    for x in range(1, nodesQuantity):
+        if x == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if x in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(x,(x-1)*Leng*np.cos(radBottom),(x-1)*Leng*np.sin(radBottom),tempDispX,tempDispY,tempFx,tempFy))
+    
+    
+    # creating the top line of the triangled truss
+    for x in range(1, nodesQuantity-1):
+        tempNr = 21+x
+        
+        if tempNr == ForceNodeNr:
+            tempFx = Fx
+            tempFy = Fy
+        else:
+            tempFx = np.nan
+            tempFy = np.nan
+            
+        if tempNr in LockNodeNrs:
+            tempDispX = 0
+            tempDispY = 0
+        else:
+            tempDispX = np.nan
+            tempDispY = np.nan
+
+        NTble.addNode_to_table(node(tempNr,(x*Leng-Leng/2)*np.cos(radTop)-inv*Height*np.sin(radTop),inv*Height*np.cos(radTop)+(x*Leng-Leng/2)*np.sin(radTop),tempDispX,tempDispY,tempFx,tempFy))
+
+   
+    """ setting up the list of elements """   
+    #create an empty truss
+    Tr = truss(1)
+    #add elements using addElementByNode
+    
+    for x in range(1, nodesQuantity-1):
+        Tr.addElementByNode(NTble,x,x+1)
+        
+    for x in range(1, nodesQuantity-2):
+        Tr.addElementByNode(NTble,21+x,22+x)
+            
+    for y in range(22, 22 + nodesQuantity - 2):
+        Tr.addElementByNode(NTble,y-21,y)
+        Tr.addElementByNode(NTble,y-20,y)
+        
+# === Manually add NODES below ===   
+    NTble.addNode_to_table(node(101,0,0.3,0,0,np.nan,np.nan))
+    #NTble.addNode_to_table(node(102,0,0.3,0,0,np.nan,np.nan))
+    NTble.addNode_to_table(node(201,0.8,0.35,np.nan,np.nan,Fx,Fy))
+    
+    
+# === Manually add ELEMENTS below === 
+    Tr.addElementByNode(NTble,101,4)
+    Tr.addElementByNode(NTble,101,3)
+    Tr.addElementByNode(NTble,101,2)
+    
     Tr.addElementByNode(NTble,23,24)
     Tr.addElementByNode(NTble,24,25)
     Tr.addElementByNode(NTble,25,26)
-    Tr.addElementByNode(NTble,26,27)
-    Tr.addElementByNode(NTble,27,28)
-    Tr.addElementByNode(NTble,28,29)
     
-    Tr.addElementByNode(NTble,1,20)
-    Tr.addElementByNode(NTble,20,2)
-    Tr.addElementByNode(NTble,2,21)
-    Tr.addElementByNode(NTble,21,13)
-    Tr.addElementByNode(NTble,3,22)
-    Tr.addElementByNode(NTble,22,4)
-    Tr.addElementByNode(NTble,4,23)
-    Tr.addElementByNode(NTble,23,5)
-    Tr.addElementByNode(NTble,5,24)
-    Tr.addElementByNode(NTble,24,6)
-    Tr.addElementByNode(NTble,6,25)
-    Tr.addElementByNode(NTble,25,7)
-    Tr.addElementByNode(NTble,7,26)
-    Tr.addElementByNode(NTble,26,8)
-    Tr.addElementByNode(NTble,8,27)
-    Tr.addElementByNode(NTble,27,9)
-    Tr.addElementByNode(NTble,9,28)
-    Tr.addElementByNode(NTble,28,10)
-    Tr.addElementByNode(NTble,10,29)
-    Tr.addElementByNode(NTble,29,11)
-    
-    Tr.addElementByNode(NTble,40,41)
-    Tr.addElementByNode(NTble,41,42)
-    Tr.addElementByNode(NTble,42,43)
-    Tr.addElementByNode(NTble,43,44)
-    Tr.addElementByNode(NTble,44,45)
-    Tr.addElementByNode(NTble,44,46)
-    
-    Tr.addElementByNode(NTble,40,20)
-    Tr.addElementByNode(NTble,20,41)
-    Tr.addElementByNode(NTble,41,21)
-    Tr.addElementByNode(NTble,21,42)
-    Tr.addElementByNode(NTble,42,22)
-    Tr.addElementByNode(NTble,22,43)
-    Tr.addElementByNode(NTble,43,23)
-    Tr.addElementByNode(NTble,23,44)
-    Tr.addElementByNode(NTble,44,24)
-    Tr.addElementByNode(NTble,24,45)
-    Tr.addElementByNode(NTble,45,25)
-    Tr.addElementByNode(NTble,25,46)
-    Tr.addElementByNode(NTble,46,26)
-    
-    
-    return Tr
+    Tr.addElementByNode(NTble,201,7)
+    Tr.addElementByNode(NTble,201,27)
     
 
-def bridge_150cm_beta():
-    """ setting up the list of nodes """
-    # input all nodes with their respective nr and x,y position
-    # initialize an empty node table
-    NTble = nodeTable()
-    # add elements to the node table usig addNode_to_table
-    
-    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
-
-    for x in range(6):
+# === == == == ==  == == == == ===
         
-        NTble.addNode_to_table(node(x+1,(x*150+75)*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-        
-    for y in range(6):
-        
-        NTble.addNode_to_table(node(10+y+1,(y*150)*10**-3,150*10**-3,np.nan,np.nan,np.nan,np.nan))
-       
-    for z in range(5):
-        
-        NTble.addNode_to_table(node(20+z+1,(x*150+75)*10**-3,30*10**-3,np.nan,np.nan,np.nan,np.nan))
-
- 
-    """ setting up the list of elements """
-    
-    #create an empty truss
-    Tr = truss(1)
-    #add elements using addElementByNode
-    Tr.addElementByNode(NTble,1,2)
-    Tr.addElementByNode(NTble,2,3)
-    Tr.addElementByNode(NTble,3,4)
-    Tr.addElementByNode(NTble,4,5)
-    Tr.addElementByNode(NTble,5,6)
-    
-    Tr.addElementByNode(NTble,10,11)
-    Tr.addElementByNode(NTble,11,12)
-    Tr.addElementByNode(NTble,12,13)
-    Tr.addElementByNode(NTble,13,14)
-    Tr.addElementByNode(NTble,14,15)
-    
-    Tr.addElementByNode(NTble,20,21)
-    Tr.addElementByNode(NTble,21,22)
-    Tr.addElementByNode(NTble,22,23)
-    Tr.addElementByNode(NTble,23,24)
-    
-    
-    Tr.addElementByNode(NTble,11,1)
-    Tr.addElementByNode(NTble,1,12)
-    Tr.addElementByNode(NTble,12,2)
-    Tr.addElementByNode(NTble,2,13)
-    Tr.addElementByNode(NTble,13,3)
-    Tr.addElementByNode(NTble,3,14)
-    Tr.addElementByNode(NTble,14,4)
-    Tr.addElementByNode(NTble,4,15)
-    Tr.addElementByNode(NTble,15,5)
-    Tr.addElementByNode(NTble,5,16)
-    Tr.addElementByNode(NTble,16,6)
-    
-    
-    
-    
     return Tr
 
-def bridge_150cm_01():
-    """ setting up the list of nodes """
-    # input all nodes with their respective nr and x,y position
-    # initialize an empty node table
-    NTble = nodeTable()
-    # add elements to the node table usig addNode_to_table
-    NTble.addNode_to_table(node(0,0,0,np.nan,np.nan,np.nan,np.nan))
-    
-    NTble.addNode_to_table(node(1,0,0,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(2,100*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(3,200*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(4,300*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(5,400*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(6,500*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(7,600*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(8,700*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(9,800*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(10,900*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(11,1000*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(12,1100*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(13,1200*10**-3,0,np.nan,np.nan,np.nan,np.nan))
-    
-    
-    
-    
-    #NTble.addNode_to_table(node(11,1000*10**-3,0,np.nan,0,np.nan,np.nan))
-    
-    
-    NTble.addNode_to_table(node(21,0,np.sqrt(100**2-50**2)*10**-3,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(22,(100-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(23,(200-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(24,(300-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(25,(400-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(26,(500-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(27,(600-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(28,(700-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(29,(800-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(30,(900-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,-100))
-    NTble.addNode_to_table(node(31,(1000-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(32,(1100-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    NTble.addNode_to_table(node(33,(1200-50)*10**-3,np.sqrt(100**2-50**2)*10**-3,np.nan,np.nan,np.nan,np.nan))
-    
-    
-    """ setting up the list of elements """
-    
-    #create an empty truss
-    Tr = truss(1)
-    #add elements using addElementByNode
-    Tr.addElementByNode(NTble,1,2)
-    Tr.addElementByNode(NTble,2,3)
-    Tr.addElementByNode(NTble,3,4)
-    Tr.addElementByNode(NTble,4,5)
-    Tr.addElementByNode(NTble,5,6)
-    Tr.addElementByNode(NTble,6,7)
-    Tr.addElementByNode(NTble,7,8)
-    Tr.addElementByNode(NTble,8,9)
-    Tr.addElementByNode(NTble,9,10)
-    Tr.addElementByNode(NTble,10,11)
-    Tr.addElementByNode(NTble,11,12)
-    Tr.addElementByNode(NTble,12,13)
-    
-    Tr.addElementByNode(NTble,21,22)
-    Tr.addElementByNode(NTble,22,23)
-    Tr.addElementByNode(NTble,23,24)
-    Tr.addElementByNode(NTble,24,25)
-    Tr.addElementByNode(NTble,25,26)
-    Tr.addElementByNode(NTble,26,27)
-    Tr.addElementByNode(NTble,27,28)
-    Tr.addElementByNode(NTble,28,29)
-    Tr.addElementByNode(NTble,29,30)
-    Tr.addElementByNode(NTble,30,31)
-    Tr.addElementByNode(NTble,31,32)
-    Tr.addElementByNode(NTble,32,33)
-    
-    Tr.addElementByNode(NTble,1,22)
-    Tr.addElementByNode(NTble,22,2)
-    Tr.addElementByNode(NTble,2,23)
-    Tr.addElementByNode(NTble,23,3)
-    Tr.addElementByNode(NTble,3,24)
-    Tr.addElementByNode(NTble,24,4)
-    Tr.addElementByNode(NTble,4,25)
-    Tr.addElementByNode(NTble,25,5)
-    Tr.addElementByNode(NTble,5,26)
-    Tr.addElementByNode(NTble,26,6)
-    Tr.addElementByNode(NTble,6,27)
-    Tr.addElementByNode(NTble,27,7)
-    Tr.addElementByNode(NTble,7,28)
-    Tr.addElementByNode(NTble,28,8)
-    Tr.addElementByNode(NTble,8,29)
-    Tr.addElementByNode(NTble,29,9)
-    Tr.addElementByNode(NTble,9,30)
-    Tr.addElementByNode(NTble,30,10)
-    Tr.addElementByNode(NTble,10,31)
-    Tr.addElementByNode(NTble,31,11)
-    
-    Tr.addElementByNode(NTble,11,32)
-    Tr.addElementByNode(NTble,32,12)
-    Tr.addElementByNode(NTble,12,33)
-    Tr.addElementByNode(NTble,33,13)
-    
-    return Tr
+
