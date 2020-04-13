@@ -370,9 +370,15 @@ def bridge_3():
         Tr.addElementByNode(NTble,y-20,y)
         
 # === Manually add NODES below ===   
-    NTble.addNode_to_table(node(101,0,0.3,0,0,np.nan,np.nan))
+        
+    NTble.addNode_to_table(node(101,0,0.25,0,0,np.nan,np.nan))
     #NTble.addNode_to_table(node(102,0,0.3,0,0,np.nan,np.nan))
     NTble.addNode_to_table(node(201,0.8,0.35,np.nan,np.nan,Fx,Fy))
+    
+    NTble.addNode_to_table(node(301,0,0.02,0,0,np.nan,np.nan))
+    NTble.addNode_to_table(node(302,0,0.04,0,0,np.nan,np.nan))
+    NTble.addNode_to_table(node(303,0,0.06,0,0,np.nan,np.nan))
+    
     
     
 # === Manually add ELEMENTS below === 
@@ -386,6 +392,11 @@ def bridge_3():
     
     Tr.addElementByNode(NTble,201,7)
     Tr.addElementByNode(NTble,201,27)
+    
+    Tr.addElementByNode(NTble,2,301)
+    Tr.addElementByNode(NTble,2,302)
+    Tr.addElementByNode(NTble,2,303)
+    
     
 
 # === == == == ==  == == == == ===
