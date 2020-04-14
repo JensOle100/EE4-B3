@@ -34,8 +34,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TheBridge import bridge_JensTest
-        Tr = bridge_JensTest()
+        from TheBridge import bridge_JensFinalV1
+        Tr = bridge_JensFinalV1()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
