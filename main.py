@@ -34,8 +34,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TheBridge import bridge_3
-        Tr = bridge_3()
+        from TheBridge import bridge_JensFinalV1
+        Tr = bridge_JensFinalV1()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
@@ -181,11 +181,13 @@ h1=plt.figure(figsize = (20, 20), dpi=150)
 Tr.plotTruss(h1,U)
 
 #EXTRA print commands to asses truss construction faster
-print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
-print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
-Tr.print_MaxMinStress()
 print('Highest buckle risk:', Tr.get_HighestBuckleRisk(), '%')
 
-print(node.list_of_nodeNr)
+print('surface area:',Tr.getTotalSurfaceArea('%'),'%')
+print('surface area:',Tr.getTotalSurfaceArea(1), 'm^2')
+Tr.print_MaxMinStress()
+
+print('All node Nrs:',node.list_of_nodeNr)
+Tr.print_ElementLength()
 
 
