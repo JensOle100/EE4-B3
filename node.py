@@ -1,30 +1,11 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Author: Jef De Smet | jef.desmet@kuleuven.be
-edit: Pieter Spaepen
-Date: February 2020
+Created on Wed Apr 15 11:34:15 2020
 
-#####JENS: Last Edit 01/04/2020
-
-
-Class of nodes.
+@author: robbemeyer
 """
 
-"""
-A node has 
-    nodeNr  identifier of the node for future reference to the node, should be unique
-    xPos    x position in global coordinate system
-    yPos    y position in global coordinate system  
-    X_disp  X displacement of the node, if the node is free to move in the X direction -> X_disp = np.nan
-    Y_disp  Y displacement of the node, if the node is free to move in the y direction -> Y_disp = np.nan
-    Fx      Force in the X direction on the node, if no force is applied in the X direction -> Fx = np.nan
-    Fy      Force in the Y direction on the node, if no force is applied in the Y direction -> Fy = np.nan
-    
-student groups are free to add additional variables (e.g. to verify that node have an unique nodeNr)
-
-"""
-
-# Imports
 import numpy as np
 
 class node:
@@ -138,8 +119,3 @@ def testfunctionNode():
     #Jens: extra functies zelf verzonnen
     
     print('The highest node nr in this table is', NT.getHighestNodeNr())
-
-
-''' call the test function in case the file is being runned as "main file" ''' 
-if __name__ == '__main__':
-    testfunctionNode()
