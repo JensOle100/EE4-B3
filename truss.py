@@ -147,7 +147,7 @@ class truss:
         lengthsReduced = list(set(lengths))
         
         for x in lengthsReduced:
-            print('Length', x, 'is used', lengths.count(x), 'times.')
+            print('Length',x , 'm is used', lengths.count(x), 'times.')
          
               
     # create a method to print all information of an element
