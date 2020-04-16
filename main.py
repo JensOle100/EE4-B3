@@ -34,8 +34,8 @@ else:
         from book_example import book_example
         Tr = book_example()
     else:
-        from TheBridge import bridge_JensFinalV1
-        Tr = bridge_JensFinalV1()
+        from TheBridge import bridge_JensFinalV2
+        Tr = bridge_JensFinalV2()
         
 #additional function added to be able to print matrices
 def matprint(mat, fmt="g"):
@@ -189,5 +189,4 @@ Tr.print_MaxMinStress()
 
 print('All node Nrs:',node.list_of_nodeNr)
 Tr.print_ElementLength()
-
 

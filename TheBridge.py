@@ -19,7 +19,7 @@ import numpy as np
 
 """ setting up the list of nodes """
 
-def bridge_JensFinalV1():
+def bridge_JensFinalV2():
     """ setting up the list of nodes """
     # input all nodes with their respective nr and x,y position
     # initialize an empty node table
@@ -27,26 +27,27 @@ def bridge_JensFinalV1():
 
 # =====================INPUTS===============================
     #How many nodes on the bottom line of the truss?
-    nodesQuantity = 2+12
+    nodesQuantity = 2+14
     turnTrussUpsideDown = False
 
     #How long should the distance between the nodes on the bottom line be?
-    Leng = 69*10**-3
+    Leng = 58*10**-3
     
-    #Distance between top and bottom line
-    Height =  np.sqrt(Leng**2-(Leng/2)**2)
+    #Diagonal = the length of the elements connecting the top and bottom line of the truss.
+    Diagonal = 40*10**-3
+    Height = np.sqrt(Diagonal**2-(Leng/2)**2)
     
     #The number of the node where the load attaches
-    ForceNodeNr = 13
+    ForceNodeNr = 15
     #Components of the force of the load    
     Fx = 0
-    Fy = -40
+    Fy = -60
    
     #Number of the nodes that cannot move. (attached to the mounting)
     LockNodeNrs = (0, 1, 101)
     
     #angle of the truss.
-    angleTop = -10
+    angleTop = 0
     radTop = np.radians(angleTop)
     angleBottom = angleTop
     radBottom = np.radians(angleBottom)
@@ -119,12 +120,12 @@ def bridge_JensFinalV1():
     
 # === Manually add ELEMENTS below === 
 
-    Tr.addElementByNode(NTble,102,33)
+    Tr.addElementByNode(NTble,102,35)
     
     #doubling
     Tr.addElementByNode(NTble,1,2)
     Tr.addElementByNode(NTble,2,3)
-
+    Tr.addElementByNode(NTble,3,4)
 # === == == == ==  == == == == ===
 
     return Tr
