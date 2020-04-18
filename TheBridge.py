@@ -19,6 +19,10 @@ import numpy as np
 """ setting up the list of nodes """
 
 def bridge_JensFinalV2():
+    
+    
+    
+    
     """ setting up the list of nodes """
     # input all nodes with their respective nr and x,y position
     # initialize an empty node table
@@ -33,7 +37,7 @@ def bridge_JensFinalV2():
     Leng = 50*10**-3
     
     #Diagonal = the length of the elements connecting the top and bottom line of the truss.
-    Diagonal = 50*10**-3
+    Diagonal = 40*10**-3
     Height = np.sqrt(Diagonal**2-(Leng/2)**2)
     
     #The number of the node where the load attaches
@@ -128,3 +132,4 @@ def bridge_JensFinalV2():
 # === == == == ==  == == == == ===
 
     return Tr
+
