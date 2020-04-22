@@ -44,7 +44,7 @@ def bridge_JensFinalV2():
     ForceNodeNr = 17
     #Components of the force of the load    
     Fx = 0
-    Fy = -80
+    Fy = -100
    
     #Number of the nodes that cannot move. (attached to the mounting)
     LockNodeNrs = (0, 1, 101)
