@@ -118,12 +118,12 @@ def bridge_JensFinalV2():
         Tr.addElementByNode(NTble,y-20,y)
         
 # === Manually add NODES below ===   
-    NTble.addNode_to_table(node(101,0,Height,0,0,np.nan,np.nan))
-    NTble.addNode_to_table(node(102,0,0.3,0,0,np.nan,np.nan))
+
+    NTble.addNode_to_table(node(101,0,0.375,0,0,np.nan,np.nan))
     
 # === Manually add ELEMENTS below === 
 
-    Tr.addElementByNode(NTble,102,37)
+    Tr.addElementByNode(NTble,101,37)
     
     #doubling
     Tr.addElementByNode(NTble,1,2)
